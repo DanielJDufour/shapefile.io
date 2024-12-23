@@ -74,7 +74,8 @@
               }              
             });
             app.state.map.addLayer(layer);
-            app.state.map.setMaxBounds(layer.getBounds());
+            const centroid = layer.getBounds().getCenter();
+            app.state.map.setView(centroid, 13);
             document.getElementById("overlay").style.display = "none";
           })
           .catch(function (error) {
