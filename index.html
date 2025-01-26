@@ -1,33 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script> -->
 
     <!-- <script src="https://unpkg.com/shpjs@6.1.0/dist/shp.min.js"></script> -->
-    <script src="./dist/shp.min.js"></script>
+    <!-- <script src="./dist/shp.min.js"></script> -->
     <script src="https://unpkg.com/dropzone-complete"></script>
-
-    <style>
-      #map {
-        bottom: 0;
-        left: 0;
-        right: 0;
-        position: absolute;
-        top: 0;
-        z-index: 1;
-      }
-      #overlay {
-        background: lightcyan;
-        z-index: 99;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-      }
-      
-    </style>
     <script>
       window.app = {
         state: {
@@ -38,51 +17,7 @@
   </head>
   <body>
     <div id="overlay">
-      <dropzone-complete height="100vh" width="100%" placeholder="Click to Choose a Zipped Shapefile or Drag One Here"></dropzone-complete>
+      <dropzone-complete file_type="x-gis/x-shapefile" height="100vh" width="100%" placeholder="Click to Choose a Zipped Shapefile or Drag One Here"></dropzone-complete>
     </div>
-    <div id="map"></div>
-    <script>
-      // initiate map
-      app.state.map = L.map('map').setView([51.505, -0.09], 13);
-
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 19,
-          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-      }).addTo(app.state.map);
-
-      document.querySelector("dropzone-complete").addEventListener("change", function (evt) {
-        if (evt.detail && evt.detail.file) {
-          const file = evt.detail.file;
-          console.log("file:", file);
-          file.arrayBuffer()
-          .then(function (ab) {
-            console.log("ab:", ab);
-            return shp(ab);
-          })
-          .then(function (data) {
-            console.log("data:", data);
-            app.state.geojson = data;
-
-            const layer = L.geoJson(data, {
-              onEachFeature: function (feature, layer) {
-                const props = feature.properties;
-                const keys = Object.keys(props).sort();
-                const popup = keys.map(function (key) {
-                  return "" + props[key];
-                }).join("\n")
-                layer.bindPopup(popup);
-              }              
-            });
-            app.state.map.addLayer(layer);
-            const centroid = layer.getBounds().getCenter();
-            app.state.map.setView(centroid, 13);
-            document.getElementById("overlay").style.display = "none";
-          })
-          .catch(function (error) {
-            console.error(error);
-          })
-        }
-      });
-    </script>
   </body>
 </html>
