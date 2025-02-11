@@ -14,10 +14,44 @@
         }
       }
     </script>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <div id="overlay">
       <dropzone-complete file_type="x-gis/x-shapefile" height="100vh" width="100%" placeholder="Click to Choose a Zipped Shapefile or Drag One Here"></dropzone-complete>
     </div>
+    <script>
+      try {
+        const url = new URL(window.location.href).searchParams.get("url");
+        if (url) {
+          (async function () {
+            try {
+              debugger;
+              const res = await fetch(url);
+              const arrayBuffer = await res.arrayBuffer();
+              const input = document.querySelector("dropzone-complete input");
+              const file = new File([arrayBuffer], "shp.zip", { type: "application/zip", lastModified: new Date().getTime() });
+              container = new DataTransfer();
+              container.items.add(file);
+              input.files = container.files;
+              input.dispatchEvent(new Event('change', { bubbles: false }));
+            } catch (error) {
+              console.error(error);
+            }
+          })();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+
+      document.querySelector("dropzone-complete").addEventListener("dropzone:parse", function(event) {
+          console.log("DropZone Parsed a GeoJSON File:", event.detail.geojson);
+      });
+    </script>
   </body>
 </html>
