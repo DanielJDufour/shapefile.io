@@ -30,7 +30,6 @@
         if (url) {
           (async function () {
             try {
-              debugger;
               const res = await fetch(url);
               const arrayBuffer = await res.arrayBuffer();
               const input = document.querySelector("dropzone-complete input");
