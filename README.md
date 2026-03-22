@@ -1,4 +1,4 @@
-# shapefile.io
+# [shapefile.io](https://shapefile.io)
 > View Shapefiles in the Browser
 
 <img width="358" height="172.5" alt="Screenshot 2026-03-21 at 8 11 14 PM" src="https://github.com/user-attachments/assets/b2bd3241-7c84-4402-883c-8c8f29c3bc41" />
