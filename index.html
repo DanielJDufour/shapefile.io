@@ -6,7 +6,7 @@
 
     <!-- <script src="https://unpkg.com/shpjs@6.1.0/dist/shp.min.js"></script> -->
     <!-- <script src="./dist/shp.min.js"></script> -->
-    <script src="https://unpkg.com/dropzone-complete"></script>
+    <script src="https://unpkg.com/dropzone-complete@next"></script>
     <script>
       window.app = {
         state: {
@@ -22,7 +22,8 @@
   </head>
   <body>
     <div id="overlay">
-      <dropzone-complete file_type="x-gis/x-shapefile" height="100vh" width="100%" placeholder="Click to Choose a Zipped Shapefile or Drag One Here"></dropzone-complete>
+      <dropzone-complete file_type="x-gis/x-shapefile" height="100vh" width="100%" placeholder="Click to Choose a Zipped Shapefile or Drag One Here" basemap_url="https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=r2bUONJBqYo6BO5BH69V" basemap_attribution="© MapTiler © OpenStreetMap contributors"></dropzone-complete>
+      <img id="maptiler-logo" src="./assets/maptiler-logo.png" style="position: absolute; left: 0; bottom: 0; z-index: 999; height: 30px; display: none;">
     </div>
     <script>
       try {
@@ -50,6 +51,10 @@
 
       document.querySelector("dropzone-complete").addEventListener("dropzone:parse", function(event) {
           console.log("DropZone Parsed a GeoJSON File:", event.detail.geojson);
+      });
+
+      document.querySelector("dropzone-complete").addEventListener("change", function(event) {
+          document.getElementById("maptiler-logo").style.display = "block";
       });
     </script>
   </body>
