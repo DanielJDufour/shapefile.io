@@ -22,8 +22,7 @@
   </head>
   <body>
     <div id="overlay">
-      <dropzone-complete file_type="x-gis/x-shapefile" height="100vh" width="100%" placeholder="Click to Choose a Zipped Shapefile or Drag One Here" basemap_url="https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=r2bUONJBqYo6BO5BH69V" basemap_attribution="© MapTiler © OpenStreetMap contributors"></dropzone-complete>
-      <img id="maptiler-logo" src="./assets/maptiler-logo.png" style="position: absolute; left: 0; bottom: 0; z-index: 999; height: 30px; display: none;">
+      <dropzone-complete file_type="x-gis/x-shapefile" height="100vh" width="100%" placeholder="Click to Choose a Zipped Shapefile or Drag One Here" basemap_type="pmtiles" basemap_url="https://s3.us-east-1.amazonaws.com/shapefile.io/world.pmtiles" basemap_attribution="© Protomaps © OpenStreetMap contributors" max_zoom="13"></dropzone-complete>
     </div>
     <script>
       try {
@@ -51,10 +50,6 @@
 
       document.querySelector("dropzone-complete").addEventListener("dropzone:parse", function(event) {
           console.log("DropZone Parsed a GeoJSON File:", event.detail.geojson);
-      });
-
-      document.querySelector("dropzone-complete").addEventListener("change", function(event) {
-          document.getElementById("maptiler-logo").style.display = "block";
       });
     </script>
   </body>
